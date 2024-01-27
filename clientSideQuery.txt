@@ -1,0 +1,131 @@
+Client Side Queries
+
+---------------------------------------------------------------------------------------------
+
+query{
+  movies {
+    id
+    movieName
+    duration
+    about
+  }
+}
+
+----------------------------------------------------------------------------------------------
+
+query{
+  persons {
+    by
+    stars
+  }
+}
+
+----------------------------------------------------------------------------------------------
+// find a Specific Movie by entering the Id 
+
+query($movieId: ID!){
+  movie(id: $movieId) {
+    movieName
+  }
+}
+
+----------------------------------------------------------------------------------------------
+
+// find movie by entering the Id of the Person 
+
+query($by: ID!){
+  person(by: $by) {
+    writers
+    director
+    movie {                   //aliases ke liye "as:movie" instead of movie 
+      movieName
+      about
+    }
+  }
+}
+
+----------------------------------------------------------------------------------------------
+// getting the stars 
+
+query{
+  star {
+    star
+  }
+}
+
+----------------------------------------------------------------------------------------------
+
+query($by: ID!){
+  person(by: $by) {
+    writers
+    director
+  }
+}
+
+----------------------------------------------------------------------------------------------
+query{
+  star {
+    movie {
+      about
+      movieName
+    }
+    star
+  }
+}
+----------------------------------------------------------------------------------------------
+
+query{
+  star {
+    movie {
+      about
+      movieName
+    }
+    person {
+      director
+    }
+    star
+  }
+}
+
+----------------------------------------------------------------------------------------------
+
+query($selectionId: ID!){
+  Selection(id: $selectionId) {
+    star
+    movie {
+      movieName
+      about
+    }
+    person {
+      director
+    }
+  }
+}
+
+----------------------------------------------------------------------------------------------
+--:--   MUTATIONS   --:--
+mutation newMovie($newMovie: movie!){
+  createMovieDummy(newMovie: $newMovie) {
+    about
+    movieName
+  }
+}
+
+----------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+
+
+type Mutation{
+        createMovieDummy(newMovie:Movie!):Movie
+}
+
+
+input Movie{
+        movieName:String!,
+        duration:Float!,
+        about:String!,
+}
+
